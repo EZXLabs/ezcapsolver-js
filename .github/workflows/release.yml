@@ -1,0 +1,146 @@
+name: Release
+
+# When pushing a v* tag:
+#   1. Generate a changelog and create a GitHub Release
+#   2. Build, verify the artifact, and upload it
+#   3. Publish to npm (skipped for pre-release versions)
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  changelog:
+    name: Changelog
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Generate changelog
+        uses: orhun/git-cliff-action@v4
+        with:
+          # cliff.toml uses the `commit_groups` filter, added in 2.14.1. Pinning
+          # keeps a template render error from surfacing only at release time.
+          version: "2.14.1"
+          config: cliff.toml
+          # Prerelease tags (containing '-', such as v1.0.0-rc.1) are not yet in
+          # cliff's tag sequence; generate them with --unreleased.
+          args: ${{ contains(github.ref_name, '-') && format('--unreleased --tag {0}', github.ref_name) || '--latest' }} --strip header
+        env:
+          OUTPUT: CHANGES.md
+          GITHUB_REPO: ${{ github.repository }}
+
+      - name: Create release
+        uses: softprops/action-gh-release@v3
+        with:
+          body_path: CHANGES.md
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # SemVer pre-releases (containing "-") are marked as such automatically.
+          prerelease: ${{ contains(github.ref_name, '-') }}
+
+  build:
+    name: Build and verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      # Abort when the tag, package.json and the SDK_VERSION constant disagree.
+      # The constant ends up in the User-Agent, so a mismatch would ship a build
+      # that misreports itself — and an npm version, once published, cannot be
+      # replaced.
+      - name: Tag, package.json and SDK_VERSION agree
+        run: |
+          declared=$(node -p "require('./package.json').version")
+          constant=$(grep -oE 'SDK_VERSION = "[^"]+"' src/config.ts | cut -d'"' -f2)
+          if [ "v$declared" != "${{ github.ref_name }}" ]; then
+            echo "::error::tag ${{ github.ref_name }} does not match package.json version $declared"
+            exit 1
+          fi
+          if [ "$constant" != "$declared" ]; then
+            echo "::error::SDK_VERSION $constant does not match package.json version $declared"
+            exit 1
+          fi
+
+      - run: pnpm run build
+
+      - name: Lint the published shape
+        run: pnpm exec publint
+
+      - name: Check the type exports
+        run: pnpm exec attw --pack .
+
+      - name: Pack
+        run: pnpm pack --pack-destination dist-pack
+
+      # A dual ESM/CJS package can pass every static check and still fail to
+      # load one way round. Install the real tarball and require it and import
+      # it before anything reaches npm.
+      - name: The tarball loads from ESM and from CJS
+        run: |
+          mkdir -p /tmp/smoke && cd /tmp/smoke
+          npm init -y > /dev/null
+          npm install "$GITHUB_WORKSPACE"/dist-pack/ezcapsolver-js-*.tgz > /dev/null
+          expected="${GITHUB_REF_NAME#v}"
+
+          node --input-type=module -e "
+            import { EzCapSolverClient, SDK_VERSION } from 'ezcapsolver-js';
+            if (typeof EzCapSolverClient !== 'function') throw new Error('ESM: no client');
+            if (SDK_VERSION !== '$expected') throw new Error('ESM: ' + SDK_VERSION);
+            console.log('ESM ok', SDK_VERSION);
+          "
+          node --input-type=commonjs -e "
+            const { EzCapSolverClient, SDK_VERSION } = require('ezcapsolver-js');
+            if (typeof EzCapSolverClient !== 'function') throw new Error('CJS: no client');
+            if (SDK_VERSION !== '$expected') throw new Error('CJS: ' + SDK_VERSION);
+            console.log('CJS ok', SDK_VERSION);
+          "
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: tarball
+          path: dist-pack/*.tgz
+
+  # Publishing uses npm trusted publishing, so there is no token in secrets.
+  # Configure the trusted publisher for `ezcapsolver-js` at
+  # https://www.npmjs.com/package/ezcapsolver-js/access with this repository and
+  # this workflow file, and create the `npm` environment on the repository.
+  publish:
+    name: Publish to npm
+    needs: [changelog, build]
+    if: ${{ !contains(github.ref_name, '-') }}
+    runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      # Mints the OIDC token npm exchanges for publish rights, and the one that
+      # signs the provenance attestation.
+      id-token: write
+    steps:
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          registry-url: https://registry.npmjs.org
+
+      # Trusted publishing needs npm 11.5.1 or newer; the version bundled with
+      # Node is usually older.
+      - name: Update npm
+        run: npm install -g npm@latest
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: tarball
+
+      - name: Publish
+        run: npm publish ./ezcapsolver-js-*.tgz --provenance --access public

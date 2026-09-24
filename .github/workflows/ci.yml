@@ -1,0 +1,144 @@
+name: CI
+
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint & Types
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      # Biome falls back to its built-in defaults when biome.jsonc does not
+      # parse, and says nothing about it — a broken config would silently
+      # reformat the whole tree with the wrong settings. Check the config
+      # itself before trusting a green run.
+      - name: Config parses
+        run: pnpm exec biome check biome.jsonc
+
+      - name: Lint and format
+        run: pnpm exec biome check .
+
+      # Examples import the package by name, which resolves through `exports`
+      # to dist/. They are therefore typechecked against the artifact that
+      # actually ships, not against src/ — so the build has to come first.
+      - name: Build
+        run: pnpm run build
+
+      # Covers src, tests and examples in one pass — tsconfig includes all
+      # three, so a published example cannot rot unnoticed.
+      - name: Typecheck
+        run: pnpm exec tsc --noEmit
+
+  test:
+    name: Test (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 22 is the floor declared in package.json; 24 is the active LTS; 26 is
+        # current. Anything below 22.12 lacks `require(esm)`, which the CJS
+        # half of the package depends on.
+        node: ["22", "24", "26"]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node }}
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      # The suite never touches the real API: creating a task is billed. It
+      # runs against injected fetch doubles and a local node:http server.
+      - name: Test
+        run: pnpm exec vitest run --coverage
+
+  package:
+    name: Package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run build
+
+      # publint catches a malformed package.json; attw catches types that
+      # resolve differently from the code they describe — the classic failure
+      # of a dual ESM/CJS package.
+      - name: Lint the published shape
+        run: pnpm exec publint
+
+      - name: Check the type exports
+        run: pnpm exec attw --pack .
+
+      # Static analysis is not the same as the thing working. Install the
+      # tarball into a clean directory and load it both ways.
+      - name: Install the tarball and load it from ESM and CJS
+        run: |
+          pnpm pack --pack-destination /tmp
+          mkdir -p /tmp/smoke && cd /tmp/smoke
+          npm init -y > /dev/null
+          npm install /tmp/ezcapsolver-js-*.tgz > /dev/null
+
+          expected=$(node -p "require('$GITHUB_WORKSPACE/package.json').version")
+
+          node --input-type=module -e "
+            import { EzCapSolverClient, SDK_VERSION, taskIdOf } from 'ezcapsolver-js';
+            if (typeof EzCapSolverClient !== 'function') throw new Error('ESM: no client');
+            if (typeof taskIdOf !== 'function') throw new Error('ESM: no taskIdOf');
+            if (SDK_VERSION !== '$expected') throw new Error('ESM: ' + SDK_VERSION);
+            console.log('ESM  ok', SDK_VERSION);
+          "
+
+          node --input-type=commonjs -e "
+            const { EzCapSolverClient, SDK_VERSION } = require('ezcapsolver-js');
+            if (typeof EzCapSolverClient !== 'function') throw new Error('CJS: no client');
+            if (SDK_VERSION !== '$expected') throw new Error('CJS: ' + SDK_VERSION);
+            console.log('CJS  ok', SDK_VERSION);
+          "
+
+  typos:
+    name: Typos
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: crate-ci/typos@v1.50.1
+
+  audit:
+    name: Dependency audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      # The package ships no runtime dependencies, so this only covers the
+      # toolchain. A finding here cannot reach a consumer, which is why it
+      # fails on high and above rather than on anything at all.
+      - name: Audit
+        run: pnpm audit --audit-level=high

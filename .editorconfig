@@ -1,0 +1,22 @@
+root = true
+
+# Default rules: UTF-8 encoding, LF line endings, preserve trailing blank lines
+# trim trailing whitespace, 4-space indentation.
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+# Biome formats TypeScript and JSON with two spaces. Anything else here would
+# just be undone on the next save.
+[*.{ts,js,mjs,cjs,json,jsonc}]
+indent_size = 2
+
+[*.{toml,yml,yaml}]
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false

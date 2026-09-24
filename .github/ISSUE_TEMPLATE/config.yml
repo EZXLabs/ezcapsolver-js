@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Service and account questions
+    url: https://ezxlabs.com
+    about: Balance, pricing and solving accuracy are handled by the EzCaptchaSolver service, not this SDK.
+  - name: Security vulnerability
+    url: https://github.com/EZXLabs/ezcapsolver-js/blob/main/SECURITY.md
+    about: Please report privately, not through a public issue.

@@ -1,0 +1,62 @@
+fail_fast: false
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: fix-byte-order-marker
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-yaml
+      - id: check-json
+        # biome.jsonc and tsconfig.json carry comments, which check-json rejects.
+        exclude: ^(biome\.jsonc|tsconfig\.json)$
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+      - id: trailing-whitespace
+
+  - repo: local
+    hooks:
+      # Biome silently falls back to its built-in defaults when biome.jsonc
+      # does not parse, so a broken config reformats the tree with the wrong
+      # settings and reports success. Check the config before trusting it.
+      - id: biome-config
+        name: biome config parses
+        description: Reject a configuration Biome would silently ignore.
+        entry: pnpm exec biome check biome.jsonc
+        language: system
+        files: ^biome\.jsonc$
+        pass_filenames: false
+
+      - id: biome
+        name: biome
+        description: Lint and format TypeScript, JavaScript and JSON.
+        entry: pnpm exec biome check --write --no-errors-on-unmatched
+        language: system
+        types_or: [ts, javascript, json]
+
+      # Examples import the package by name, which resolves through `exports`
+      # to dist/ — so they are checked against the built artifact and the
+      # build has to run first.
+      - id: typecheck
+        name: tsc
+        description: Typecheck the sources, the tests and the examples.
+        entry: bash -c 'pnpm run build >/dev/null && pnpm exec tsc --noEmit'
+        language: system
+        types_or: [ts]
+        pass_filenames: false
+
+      - id: test
+        name: vitest
+        description: Run the test suite.
+        entry: pnpm exec vitest run
+        language: system
+        types_or: [ts]
+        pass_filenames: false
+
+      - id: typos
+        name: typos
+        description: Check spelling in sources and documentation.
+        entry: typos
+        language: system
+        pass_filenames: false

@@ -1,0 +1,109 @@
+# typos checks English spelling in source code and documentation.
+
+
+[files]
+# Files and paths excluded from spell checking.
+extend-exclude = ["CHANGELOG.md"]
+ignore-hidden = true  # Ignore hidden files.
+ignore-vcs = true     # Ignore files excluded by VCS ignore rules.
+ignore-dot = true     # Ignore files excluded by .ignore files.
+
+# Spell-checking behavior.
+[default]
+check-filename = true # Check file names.
+check-file = true     # Check file contents.
+locale = "en"
+binary = false        # Whether to check binary files.
+unicode = true        # Support Unicode identifiers.
+# Regular expressions for ignored content, including inline disable comments.
+extend-ignore-re = [
+    "(?Rm)^.*(#|//)\\s*spellchecker:disable-line$",
+    "(?s)(#|//)\\s*spellchecker:off.*?\\n\\s*(#|//)\\s*spellchecker:on",
+]
+extend-ignore-identifiers-re = []    # Regular expressions for ignored identifiers.
+extend-ignore-words-re = []          # Regular expressions for ignored words.
+
+[default.extend-words]
+# Common development tools, libraries, protocols, and abbreviations that may be false positives.
+
+actix = "actix"
+abck = "abck"
+anyhow = "anyhow"
+axum = "axum"
+bincode = "bincode"
+bitflags = "bitflags"
+clippy = "clippy"
+dashmap = "dashmap"
+dotenvy = "dotenvy"
+egui = "egui"
+flate2 = "flate2"
+futures = "futures"
+itertools = "itertools"
+lso = "lso"
+miette = "miette"
+miri = "miri"
+nextest = "nextest"
+proptest = "proptest"
+rayon = "rayon"
+reqwest = "reqwest"
+rhai = "rhai"
+rustacean = "rustacean"
+rustc = "rustc"
+rustdoc = "rustdoc"
+rustfmt = "rustfmt"
+rustup = "rustup"
+serde = "serde"
+sqlx = "sqlx"
+tauri = "tauri"
+thiserror = "thiserror"
+tokio = "tokio"
+tracing = "tracing"
+wasm = "wasm"
+wgpu = "wgpu"
+winit = "winit"
+
+amqp = "amqp"
+avro = "avro"
+bson = "bson"
+clickhouse = "clickhouse"
+cors = "cors"
+csrf = "csrf"
+grpc = "grpc"
+jwks = "jwks"
+jwt = "jwt"
+kafka = "kafka"
+msgpack = "msgpack"
+nats = "nats"
+ndjson = "ndjson"
+oidc = "oidc"
+otel = "otel"
+protobuf = "protobuf"
+sse = "sse"
+webhook = "webhook"
+websocket = "websocket"
+websockets = "websockets"
+
+ebpf = "ebpf"
+epoll = "epoll"
+grafana = "grafana"
+ioctl = "ioctl"
+jaeger = "jaeger"
+kqueue = "kqueue"
+kubernetes = "kubernetes"
+libc = "libc"
+mmap = "mmap"
+musl = "musl"
+nginx = "nginx"
+postgres = "postgres"
+postgresql = "postgresql"
+prometheus = "prometheus"
+ptrace = "ptrace"
+redis = "redis"
+sqlite = "sqlite"
+xattr = "xattr"
+zstd = "zstd"
+
+
+[type.proto]
+extend-glob = ["*.proto"]
+check-file = false

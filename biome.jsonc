@@ -1,0 +1,74 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.13/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "includes": ["**/*.ts", "**/*.js", "**/*.json", "**/*.jsonc"]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100,
+    "lineEnding": "lf"
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "semicolons": "always",
+      "trailingCommas": "all",
+      "arrowParentheses": "always"
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended",
+      "correctness": {
+        "noUndeclaredVariables": "error",
+        "useExhaustiveDependencies": "off"
+      },
+      "style": {
+        "noNonNullAssertion": "error",
+        "useConst": "error",
+        // Field names are the service's own wire spellings — generated_pass_UUID,
+        // _px3, bm_lso_time, html_b64, websiteURL. Renaming one to camelCase
+        // would make it a different field.
+        "useNamingConvention": "off"
+      },
+      "suspicious": {
+        "noExplicitAny": "error",
+        "noConsole": { "level": "error", "options": { "allow": ["error", "warn"] } }
+      },
+      "complexity": {
+        "noExcessiveCognitiveComplexity": {
+          "level": "warn",
+          "options": { "maxAllowedComplexity": 15 }
+        },
+        // Conflicts head-on with noPropertyAccessFromIndexSignature in tsconfig,
+        // which requires bracket access for anything reached through an index
+        // signature — and that is exactly what separates a modelled field from
+        // one a worker added. Only one of the two can stay; keep the useful one.
+        "useLiteralKeys": "off"
+      }
+    }
+  },
+  "overrides": [
+    {
+      // Writing to the console is the entire point of consoleLogger().
+      "includes": ["examples/**", "tests/**", "src/logger.ts"],
+      "linter": {
+        "rules": {
+          "suspicious": { "noConsole": "off" },
+          // Examples are documentation. logging-and-errors lays out all five
+          // failure layers side by side, which is precisely what it teaches;
+          // splitting it up for a complexity score would ruin it as an example.
+          "complexity": { "noExcessiveCognitiveComplexity": "off" }
+        }
+      }
+    }
+  ]
+}
