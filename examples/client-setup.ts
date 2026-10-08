@@ -1,7 +1,7 @@
 /**
  * Build a client with every option set, and route its traffic through a proxy.
  *
- * Nothing here is required — `new EzCapSolverClient()` with `EZCAPTCHA_API_KEY`
+ * Nothing here is required — `new EzCapSolverClient()` with `EZCAPSOLVER_API_KEY`
  * in the environment is enough. This shows what can be changed and what each
  * setting costs.
  *
@@ -12,8 +12,8 @@
 import { consoleLogger, EzCapSolverClient } from "ezcapsolver-js";
 
 const client = new EzCapSolverClient({
-  // Falls back to EZCAPTCHA_API_KEY, which is the only value read implicitly.
-  clientKey: process.env["EZCAPTCHA_API_KEY"],
+  // Falls back to EZCAPSOLVER_API_KEY, which is the only value read implicitly.
+  clientKey: "YOUR_API_KEY",
 
   // The service splits its two deployments, so these cannot share one host.
   // Override them for a self-hosted deployment or a local test server.
@@ -60,6 +60,7 @@ console.log(`Balance:    ${await client.getBalance()}`);
 //
 //     const dispatcher = new ProxyAgent("http://user:pass@proxy.example:8080");
 //     const proxied = new EzCapSolverClient({
+//       clientKey: "YOUR_API_KEY",
 //       fetch: (url, init) => fetch(url, { ...init, dispatcher } as RequestInit),
 //     });
 //

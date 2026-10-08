@@ -14,7 +14,6 @@ English · [简体中文](README.zh-CN.md)
 ## Running them
 
 ```bash
-export EZCAPTCHA_API_KEY=your-client-key
 export EZCAPTCHA_PROXY=http://user:pass@host:port   # only where noted
 
 node --experimental-strip-types examples/recaptcha-v2/recaptcha-v2-task-proxyless.ts
@@ -23,8 +22,8 @@ node --experimental-strip-types examples/recaptcha-v2/recaptcha-v2-task-proxyles
 The flag strips the type annotations before running. Node 23.6 and later do
 that by default, so it can be dropped there.
 
-Every example builds its client with no key argument, so it is read from
-`EZCAPTCHA_API_KEY`.
+Every example passes the placeholder key `YOUR_API_KEY`; replace it with your
+own key before running.
 
 Two run exactly as written — `recaptcha-v2-task-proxyless.ts` and `hcaptcha.ts`
 point at the vendors' own demo pages. The rest carry placeholder site keys and

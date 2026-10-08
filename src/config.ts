@@ -21,7 +21,7 @@ export const DEFAULT_ASYNC_BASE_URL = "https://api.ez-captcha.com";
 export const DEFAULT_SYNC_BASE_URL = "https://sync.ez-captcha.com";
 
 /** Read when no client key is supplied explicitly. */
-export const DEFAULT_CLIENT_KEY_ENV = "EZCAPTCHA_API_KEY";
+export const DEFAULT_CLIENT_KEY_ENV = "EZCAPSOLVER_API_KEY";
 
 /**
  * Bounds one call to an asynchronous endpoint or the balance endpoint, in
@@ -89,7 +89,7 @@ export function defaultPolling(): PollingConfig {
  */
 export interface ClientOptions {
   /**
-   * The client key. Falls back to the `EZCAPTCHA_API_KEY` environment
+   * The client key. Falls back to the `EZCAPSOLVER_API_KEY` environment
    * variable, which is the only place this is read from implicitly.
    */
   clientKey?: string | undefined;

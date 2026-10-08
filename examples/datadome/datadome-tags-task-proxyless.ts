@@ -13,7 +13,7 @@
 
 import { EzCapSolverClient } from "ezcapsolver-js";
 
-const client = new EzCapSolverClient();
+const client = new EzCapSolverClient({ clientKey: "YOUR_API_KEY" });
 
 const solved = await client.syncSolveDataDomeTagsTaskProxyless({
   // DataDome JavaScript key, read from the tags script tag.

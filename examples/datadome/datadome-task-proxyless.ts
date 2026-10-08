@@ -16,7 +16,7 @@ import { EzCapSolverClient } from "ezcapsolver-js";
 
 const CHALLENGE_HTML_B64 = "base64_encoded_challenge_html";
 
-const client = new EzCapSolverClient();
+const client = new EzCapSolverClient({ clientKey: "YOUR_API_KEY" });
 
 // Step one: find out where the challenge lives.
 const first = await client.syncSolveDataDomeTaskProxyless({

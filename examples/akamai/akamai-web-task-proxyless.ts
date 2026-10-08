@@ -17,7 +17,7 @@ import { EzCapSolverClient } from "ezcapsolver-js";
 
 const MAX_ROUNDS = 5;
 
-const client = new EzCapSolverClient();
+const client = new EzCapSolverClient({ clientKey: "YOUR_API_KEY" });
 
 // The first round sends no encoded state.
 let encodeData = "";

@@ -123,8 +123,9 @@ TypeScript types are included; there is no `@types/` package to install.
 ```ts
 import { EzCapSolverClient } from "ezcapsolver-js";
 
-// Reads EZCAPTCHA_API_KEY from the environment when no key is passed.
-const client = new EzCapSolverClient({ clientKey: "your-client-key" });
+// Replace YOUR_API_KEY with your client key. When no key is passed,
+// it is read from the EZCAPSOLVER_API_KEY environment variable.
+const client = new EzCapSolverClient({ clientKey: "YOUR_API_KEY" });
 
 const solved = await client.solveReCaptchaV2TaskProxyless({
   websiteURL: "https://www.google.com/recaptcha/api2/demo",
@@ -660,7 +661,7 @@ Every option has a default shared with the Rust, Go and Python SDKs. Anything le
 
 ```ts
 const client = new EzCapSolverClient({
-  clientKey: process.env.EZCAPTCHA_API_KEY,
+  clientKey: "YOUR_API_KEY",
   asyncBaseUrl: "https://api.ez-captcha.com",
   syncBaseUrl: "https://sync.ez-captcha.com",
   timeout: 30_000,
@@ -675,7 +676,7 @@ const client = new EzCapSolverClient({
 
 | Option | Default | Notes |
 | --- | --- | --- |
-| `clientKey` | `EZCAPTCHA_API_KEY` | The only value read implicitly |
+| `clientKey` | `EZCAPSOLVER_API_KEY` | The only value read implicitly |
 | `asyncBaseUrl` | `https://api.ez-captcha.com` | Asynchronous tasks and balance |
 | `syncBaseUrl` | `https://sync.ez-captcha.com` | Synchronous tasks — a separate deployment |
 | `timeout` | `30_000` ms | One asynchronous or balance request |
@@ -704,6 +705,7 @@ import { ProxyAgent } from "undici";
 
 const dispatcher = new ProxyAgent("http://user:pass@proxy.example:8080");
 const client = new EzCapSolverClient({
+  clientKey: "YOUR_API_KEY",
   fetch: (url, init) => fetch(url, { ...init, dispatcher } as RequestInit),
 });
 ```
@@ -774,7 +776,10 @@ Logging is discarded unless a logger is supplied. The interface is pino-shaped, 
 ```ts
 import pino from "pino";
 
-const client = new EzCapSolverClient({ logger: pino({ level: "trace" }) });
+const client = new EzCapSolverClient({
+  clientKey: "YOUR_API_KEY",
+  logger: pino({ level: "trace" }),
+});
 ```
 
 For something smaller, `consoleLogger` needs no dependency:
@@ -782,13 +787,14 @@ For something smaller, `consoleLogger` needs no dependency:
 ```ts
 import { consoleLogger, EzCapSolverClient } from "ezcapsolver-js";
 
-const client = new EzCapSolverClient({ logger: consoleLogger("debug") });
+const client = new EzCapSolverClient({ clientKey: "YOUR_API_KEY", logger: consoleLogger("debug") });
 ```
 
 Any object with the right method shape works; every level is optional.
 
 ```ts
 const client = new EzCapSolverClient({
+  clientKey: "YOUR_API_KEY",
   logger: {
     debug: (fields, message) => myLogger.debug({ ...fields }, message),
     error: (fields, message) => myLogger.error({ ...fields }, message),
@@ -834,11 +840,9 @@ The service applies its own rate limits per key, so cap the fan-out when the lis
 
 ## 🧪 Runnable Examples
 
-[`examples/`](examples/) holds one file per task type, plus five about the SDK itself.
+[`examples/`](examples/) holds one file per task type, plus five about the SDK itself. Replace the `YOUR_API_KEY` placeholder in the examples with your client key, then:
 
 ```bash
-export EZCAPTCHA_API_KEY=your-client-key
-
 # These two use the vendors' own demo pages and run as they are.
 node --experimental-strip-types examples/recaptcha-v2/recaptcha-v2-task-proxyless.ts
 node --experimental-strip-types examples/hcaptcha/hcaptcha.ts

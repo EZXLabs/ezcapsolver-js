@@ -17,7 +17,7 @@ import { EzCapSolverClient } from "ezcapsolver-js";
 const PROXY = process.env["EZCAPTCHA_PROXY"];
 if (PROXY === undefined) throw new Error("set EZCAPTCHA_PROXY to run this example");
 
-const client = new EzCapSolverClient();
+const client = new EzCapSolverClient({ clientKey: "YOUR_API_KEY" });
 
 const solved = await client.syncSolveTlsTask({
   // Browser fingerprint the worker should present.

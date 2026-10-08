@@ -13,7 +13,7 @@ import {
 } from "../src/config.js";
 import { consoleLogger, redact, redactBody } from "../src/logger.js";
 
-const ENV_KEY = "EZCAPTCHA_API_KEY";
+const ENV_KEY = "EZCAPSOLVER_API_KEY";
 let savedKey: string | undefined;
 
 beforeEach(() => {

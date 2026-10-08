@@ -14,8 +14,7 @@
 
 import { EzCapSolverClient } from "ezcapsolver-js";
 
-// With no key passed, the client reads EZCAPTCHA_API_KEY from the environment.
-const client = new EzCapSolverClient();
+const client = new EzCapSolverClient({ clientKey: "YOUR_API_KEY" });
 
 // Creates the task, then polls until the worker finishes it.
 const solved = await client.solveReCaptchaV2EnterpriseTaskProxyless({

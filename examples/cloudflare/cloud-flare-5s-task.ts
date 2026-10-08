@@ -22,7 +22,7 @@ const TARGET = "https://example.com";
 const PROXY = process.env["EZCAPTCHA_PROXY"];
 if (PROXY === undefined) throw new Error("set EZCAPTCHA_PROXY to run this example");
 
-const client = new EzCapSolverClient();
+const client = new EzCapSolverClient({ clientKey: "YOUR_API_KEY" });
 
 const solved = await client.solveCloudFlare5STask({
   websiteURL: TARGET,

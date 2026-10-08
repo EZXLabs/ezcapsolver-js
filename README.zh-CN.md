@@ -123,8 +123,8 @@ const { EzCapSolverClient } = require("ezcapsolver-js"); // CommonJS
 ```ts
 import { EzCapSolverClient } from "ezcapsolver-js";
 
-// 不传 key 时从环境变量 EZCAPTCHA_API_KEY 读取。
-const client = new EzCapSolverClient({ clientKey: "your-client-key" });
+// 将 YOUR_API_KEY 替换为你的密钥。不传 key 时从环境变量 EZCAPSOLVER_API_KEY 读取。
+const client = new EzCapSolverClient({ clientKey: "YOUR_API_KEY" });
 
 const solved = await client.solveReCaptchaV2TaskProxyless({
   websiteURL: "https://www.google.com/recaptcha/api2/demo",
@@ -660,7 +660,7 @@ const result = await client.waitForResult(taskId, {
 
 ```ts
 const client = new EzCapSolverClient({
-  clientKey: process.env.EZCAPTCHA_API_KEY,
+  clientKey: "YOUR_API_KEY",
   asyncBaseUrl: "https://api.ez-captcha.com",
   syncBaseUrl: "https://sync.ez-captcha.com",
   timeout: 30_000,
@@ -675,7 +675,7 @@ const client = new EzCapSolverClient({
 
 | 配置项 | 默认值 | 说明 |
 | --- | --- | --- |
-| `clientKey` | `EZCAPTCHA_API_KEY` | 唯一一个会隐式读取的值 |
+| `clientKey` | `EZCAPSOLVER_API_KEY` | 唯一一个会隐式读取的值 |
 | `asyncBaseUrl` | `https://api.ez-captcha.com` | 异步任务与余额查询 |
 | `syncBaseUrl` | `https://sync.ez-captcha.com` | 同步任务 —— 是另一套部署 |
 | `timeout` | `30_000` ms | 一次异步或余额请求 |
@@ -704,6 +704,7 @@ import { ProxyAgent } from "undici";
 
 const dispatcher = new ProxyAgent("http://user:pass@proxy.example:8080");
 const client = new EzCapSolverClient({
+  clientKey: "YOUR_API_KEY",
   fetch: (url, init) => fetch(url, { ...init, dispatcher } as RequestInit),
 });
 ```
@@ -774,7 +775,10 @@ try {
 ```ts
 import pino from "pino";
 
-const client = new EzCapSolverClient({ logger: pino({ level: "trace" }) });
+const client = new EzCapSolverClient({
+  clientKey: "YOUR_API_KEY",
+  logger: pino({ level: "trace" }),
+});
 ```
 
 不想引依赖的话,`consoleLogger` 开箱可用:
@@ -782,13 +786,14 @@ const client = new EzCapSolverClient({ logger: pino({ level: "trace" }) });
 ```ts
 import { consoleLogger, EzCapSolverClient } from "ezcapsolver-js";
 
-const client = new EzCapSolverClient({ logger: consoleLogger("debug") });
+const client = new EzCapSolverClient({ clientKey: "YOUR_API_KEY", logger: consoleLogger("debug") });
 ```
 
 任何方法形状对得上的对象都行,每个级别都是可选的:
 
 ```ts
 const client = new EzCapSolverClient({
+  clientKey: "YOUR_API_KEY",
   logger: {
     debug: (fields, message) => myLogger.debug({ ...fields }, message),
     error: (fields, message) => myLogger.error({ ...fields }, message),
@@ -834,11 +839,9 @@ await client.solveHCaptcha({ websiteURL, websiteKey }, { signal: controller.sign
 
 ## 🧪 可运行示例
 
-[`examples/`](examples/) 下每个任务类型一个文件,另有五个讲 SDK 本身。
+[`examples/`](examples/) 下每个任务类型一个文件,另有五个讲 SDK 本身。先把示例中的占位符 `YOUR_API_KEY` 替换为你的密钥,然后:
 
 ```bash
-export EZCAPTCHA_API_KEY=your-client-key
-
 # 这两个用的是厂商自己的 demo 页面,可以原样跑通。
 node --experimental-strip-types examples/recaptcha-v2/recaptcha-v2-task-proxyless.ts
 node --experimental-strip-types examples/hcaptcha/hcaptcha.ts

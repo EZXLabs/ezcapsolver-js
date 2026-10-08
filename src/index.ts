@@ -13,7 +13,7 @@
  * console.log(solved.solution.gRecaptchaResponse);
  * ```
  *
- * The client key falls back to the `EZCAPTCHA_API_KEY` environment variable.
+ * The client key falls back to the `EZCAPSOLVER_API_KEY` environment variable.
  *
  * # Errors
  *

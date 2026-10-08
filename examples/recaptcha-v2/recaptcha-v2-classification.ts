@@ -24,7 +24,7 @@ const image = await readFile(new URL("../fixtures/crosswalks1x1.jpg", import.met
   encoding: "base64",
 });
 
-const client = new EzCapSolverClient();
+const client = new EzCapSolverClient({ clientKey: "YOUR_API_KEY" });
 
 const solved = await client.syncSolveReCaptchaV2Classification({
   image,

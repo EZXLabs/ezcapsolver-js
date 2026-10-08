@@ -22,7 +22,7 @@ import {
 // and response bodies, with clientKey and proxy replaced at any nesting depth
 // — nothing is even rendered below that level, so leaving it off costs
 // nothing. Any pino instance can be passed here instead.
-const client = new EzCapSolverClient({ logger: consoleLogger("trace") });
+const client = new EzCapSolverClient({ clientKey: "YOUR_API_KEY", logger: consoleLogger("trace") });
 
 try {
   const solved = await client.solveReCaptchaV2TaskProxyless({

@@ -4,7 +4,7 @@
  * Task type: `ReCaptchaV2TaskProxyless`
  *
  * The site below is Google's own reCAPTCHA demo page, so this example runs as
- * written once `EZCAPTCHA_API_KEY` is set.
+ * written once `YOUR_API_KEY` is replaced with your key.
  *
  * `syncSolveReCaptchaV2TaskProxyless` runs the same task on the service's
  * synchronous endpoint. It returns a promise too — `sync` names the endpoint, not
@@ -18,8 +18,7 @@
 
 import { EzCapSolverClient } from "ezcapsolver-js";
 
-// With no key passed, the client reads EZCAPTCHA_API_KEY from the environment.
-const client = new EzCapSolverClient();
+const client = new EzCapSolverClient({ clientKey: "YOUR_API_KEY" });
 
 // Creates the task, then polls until the worker finishes it.
 const solved = await client.solveReCaptchaV2TaskProxyless({

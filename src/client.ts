@@ -118,7 +118,7 @@ const TASK_STATUSES: ReadonlySet<string> = new Set<TaskStatus>(["processing", "r
  * solved.solution.gRecaptchaResponse;
  * ```
  *
- * The client key falls back to the `EZCAPTCHA_API_KEY` environment variable.
+ * The client key falls back to the `EZCAPSOLVER_API_KEY` environment variable.
  */
 export class EzCapSolverClient {
   readonly #config: ResolvedConfig;

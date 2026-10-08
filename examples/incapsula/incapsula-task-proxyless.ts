@@ -17,7 +17,7 @@ import { EzCapSolverClient } from "ezcapsolver-js";
 
 const SCRIPT = "full_source_of_the_reese84_sensor_script";
 
-const client = new EzCapSolverClient();
+const client = new EzCapSolverClient({ clientKey: "YOUR_API_KEY" });
 
 const solved = await client.syncSolveIncapsulaTaskProxyless({
   script: SCRIPT,

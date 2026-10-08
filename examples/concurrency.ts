@@ -17,7 +17,7 @@ const SITES = [
   { websiteURL: "https://example.com/c", websiteKey: "6Lc-key-c" },
 ];
 
-const client = new EzCapSolverClient();
+const client = new EzCapSolverClient({ clientKey: "YOUR_API_KEY" });
 
 // `allSettled` rather than `all`: one failure must not discard the tasks that
 // succeeded, because every one of them was billed.

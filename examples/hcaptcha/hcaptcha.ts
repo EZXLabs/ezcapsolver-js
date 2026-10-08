@@ -4,7 +4,7 @@
  * Task type: `HCaptcha`
  *
  * The site below is hCaptcha's own demo page, so this example runs as written
- * once `EZCAPTCHA_API_KEY` is set.
+ * once `YOUR_API_KEY` is replaced with your key.
  *
  * Docs: https://docs.ezxlabs.com/docs/captcha/api/hcaptcha
  *
@@ -14,7 +14,7 @@
 
 import { EzCapSolverClient } from "ezcapsolver-js";
 
-const client = new EzCapSolverClient();
+const client = new EzCapSolverClient({ clientKey: "YOUR_API_KEY" });
 
 const solved = await client.solveHCaptcha({
   websiteURL: "https://accounts.hcaptcha.com/demo",

@@ -12,7 +12,6 @@
 ## 怎么跑
 
 ```bash
-export EZCAPTCHA_API_KEY=your-client-key
 export EZCAPTCHA_PROXY=http://user:pass@host:port   # 仅标注需要的示例用得到
 
 node --experimental-strip-types examples/recaptcha-v2/recaptcha-v2-task-proxyless.ts
@@ -20,7 +19,7 @@ node --experimental-strip-types examples/recaptcha-v2/recaptcha-v2-task-proxyles
 
 这个 flag 的作用是运行前剥掉类型标注。Node 23.6 及以后默认就会做,可以省掉。
 
-每个示例都不传 key 构造客户端,所以 key 从 `EZCAPTCHA_API_KEY` 读。
+所有示例都使用占位密钥 `YOUR_API_KEY`,运行前替换成你自己的密钥。
 
 有两个可以原样跑通 —— `recaptcha-v2-task-proxyless.ts` 和 `hcaptcha.ts` 指向的是
 厂商自己的 demo 页面。其余的站点密钥和页面数据都是占位值,需要替换成你从目标站点上

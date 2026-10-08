@@ -13,7 +13,7 @@
 
 import { EzCapSolverClient } from "ezcapsolver-js";
 
-const client = new EzCapSolverClient();
+const client = new EzCapSolverClient({ clientKey: "YOUR_API_KEY" });
 
 // Every value below is collected from the protected page before solving:
 // `sbsdUrl` comes from its <script src="/sbsd/...?v=..."> tag, `script_base64`
