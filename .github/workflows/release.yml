@@ -28,7 +28,7 @@ jobs:
         with:
           # cliff.toml uses the `commit_groups` filter, added in 2.14.1. Pinning
           # keeps a template render error from surfacing only at release time.
-          version: "2.14.1"
+          version: "v2.14.1"
           config: cliff.toml
           # Prerelease tags (containing '-', such as v1.0.0-rc.1) are not yet in
           # cliff's tag sequence; generate them with --unreleased.
