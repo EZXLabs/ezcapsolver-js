@@ -120,6 +120,8 @@ TypeScript types are included; there is no `@types/` package to install.
 
 ## 🚀 Quick Start
 
+For the complete API flow, see the [CAPTCHA quick start](https://docs.ezxlabs.com/docs/captcha/guide). For full browser workflows, see the [Playwright CAPTCHA integration](https://ezxlabs.com/integrations/playwright-captcha-solver) and [Puppeteer CAPTCHA integration](https://ezxlabs.com/integrations/puppeteer-captcha-solver).
+
 ```ts
 import { EzCapSolverClient } from "ezcapsolver-js";
 
@@ -168,6 +170,8 @@ This is the proxy the *worker* uses to reach the protected site. For routing the
 ### reCAPTCHA v2
 
 [reCAPTCHA v2 API reference](https://docs.ezxlabs.com/docs/captcha/api/recaptcha-v2)
+
+For help choosing a task type and finding `websiteURL`, `websiteKey` or `pageAction`, see [Select the correct ReCaptcha task type](https://docs.ezxlabs.com/docs/captcha/tutorials/identify-recaptcha-version) and [Find ReCaptcha task parameters](https://docs.ezxlabs.com/docs/captcha/tutorials/find-recaptcha-parameters).
 
 The first five types share one parameter model and one solution model; only the method name differs.
 
@@ -236,6 +240,8 @@ const solved = await client.solveReCaptchaV2SEnterpriseTaskProxyless({
 ```
 
 <a id="task-recaptchav2classification"></a>
+
+[reCAPTCHA v2 classification API reference](https://docs.ezxlabs.com/docs/captcha/api/recaptcha-v2-classification)
 
 #### ReCaptchaV2Classification
 
@@ -336,6 +342,8 @@ console.log(solved.solution.token);
 ```
 
 <a id="task-funcaptchaclassification"></a>
+
+[FunCaptcha image classification API reference](https://docs.ezxlabs.com/docs/captcha/api/funcaptcha-classification)
 
 #### FunCaptchaClassification
 
@@ -469,6 +477,8 @@ console.log(solved.solution.payload);
 ```
 
 ### DataDome
+
+[DataDome API reference](https://docs.ezxlabs.com/docs/captcha/api/datadome)
 
 <a id="task-datadometaskproxyless"></a>
 

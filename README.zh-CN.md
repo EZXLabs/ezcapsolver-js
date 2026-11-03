@@ -120,6 +120,8 @@ const { EzCapSolverClient } = require("ezcapsolver-js"); // CommonJS
 
 ## 🚀 快速开始
 
+完整 API 接入流程请查看 [EZCaptchaSolver 快速入门](https://docs.ezxlabs.com/zh/docs/captcha/guide)。完整浏览器工作流请查看 [Playwright 验证码识别集成](https://ezxlabs.com/zh/integrations/playwright-captcha-solver)和 [Puppeteer 验证码识别集成](https://ezxlabs.com/zh/integrations/puppeteer-captcha-solver)。
+
 ```ts
 import { EzCapSolverClient } from "ezcapsolver-js";
 
@@ -167,6 +169,8 @@ const solved = await client.syncSolveHCaptcha({ websiteURL, websiteKey });
 ### reCAPTCHA v2
 
 [reCAPTCHA v2 API 文档](https://docs.ezxlabs.com/zh/docs/captcha/api/recaptcha-v2)
+
+选择任务类型或查找 `websiteURL`、`websiteKey`、`pageAction` 时，请查看 [ReCaptcha 任务类型选择](https://docs.ezxlabs.com/zh/docs/captcha/tutorials/identify-recaptcha-version) 和 [ReCaptcha 任务参数查找](https://docs.ezxlabs.com/zh/docs/captcha/tutorials/find-recaptcha-parameters)。
 
 前五个类型共用同一套参数模型和同一个 solution 模型,只有方法名不同。
 
@@ -235,6 +239,8 @@ const solved = await client.solveReCaptchaV2SEnterpriseTaskProxyless({
 ```
 
 <a id="task-recaptchav2classification"></a>
+
+[reCAPTCHA v2 图片识别 API 文档](https://docs.ezxlabs.com/zh/docs/captcha/api/recaptcha-v2-classification)
 
 #### ReCaptchaV2Classification
 
@@ -335,6 +341,8 @@ console.log(solved.solution.token);
 ```
 
 <a id="task-funcaptchaclassification"></a>
+
+[FunCaptcha 图片识别 API 文档](https://docs.ezxlabs.com/zh/docs/captcha/api/funcaptcha-classification)
 
 #### FunCaptchaClassification
 
@@ -468,6 +476,8 @@ console.log(solved.solution.payload);
 ```
 
 ### DataDome
+
+[DataDome API 文档](https://docs.ezxlabs.com/zh/docs/captcha/api/datadome)
 
 <a id="task-datadometaskproxyless"></a>
 
