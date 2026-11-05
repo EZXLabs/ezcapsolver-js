@@ -22,7 +22,7 @@
 
 ---
 
-The EZCaptchaSolver JavaScript SDK is an open-source JavaScript and TypeScript client maintained by [EZXLabs](https://ezxlabs.com) for its CAPTCHA recognition task API. It provides typed requests and a Promise-based client for the supported task types below; the package also includes a TLS forwarding task that does not solve CAPTCHAs. For the wider SDK family, see the [EZCaptchaSolver SDK product page](https://ezxlabs.com/products/sdk); for HTTP request and response fields, see the [EZCaptchaSolver API reference](https://docs.ezxlabs.com/docs/captcha/api); for JavaScript usage, see the [examples in this repository](https://github.com/EZXLabs/ezcapsolver-js/blob/main/examples/README.md).
+The EZCaptchaSolver JavaScript SDK is an open-source JavaScript and TypeScript client maintained by [EZXLabs](https://ezxlabs.com) for its [CAPTCHA recognition task API](https://ezxlabs.com/products/captcha). It provides typed requests and a Promise-based client for the supported task types below; the package also includes a TLS forwarding task that does not solve CAPTCHAs. For the wider SDK family, see the [EZCaptchaSolver SDK product page](https://ezxlabs.com/products/sdk); for HTTP request and response fields, see the [EZCaptchaSolver API reference](https://docs.ezxlabs.com/docs/captcha/api); for JavaScript usage, see the [examples in this repository](https://github.com/EZXLabs/ezcapsolver-js/blob/main/examples/README.md).
 
 **Zero runtime dependencies.** Built on the platform `fetch`, so it runs on Node, Deno, Bun and edge runtimes alike.
 
