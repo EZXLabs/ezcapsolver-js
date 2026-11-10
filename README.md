@@ -37,7 +37,7 @@ A captcha type can support both forms at once, and almost every type supports th
 
 Every type has two methods: `solveX` creates the task and polls for the result, `syncSolveX` runs it through the synchronous endpoint. Both return a promise — `sync` names the endpoint, not the calling convention.
 
-### reCAPTCHA v2
+### [reCAPTCHA v2](https://ezxlabs.com/products/recaptchav2)
 
 | Task type | Modes | Example | Description |
 | :-: | :-: | :-: | --- |
@@ -46,9 +46,9 @@ Every type has two methods: `solveX` creates the task and polls for the result, 
 | `ReCaptchaV2STaskProxyless` | all | [Example](#task-recaptchav2staskproxyless) | reCAPTCHA v2 carrying the challenge-bound `s` parameter |
 | `ReCaptchaV2EnterpriseTaskProxyless` | all | [Example](#task-recaptchav2enterprisetaskproxyless) | reCAPTCHA v2 Enterprise |
 | `ReCaptchaV2SEnterpriseTaskProxyless` | all | [Example](#task-recaptchav2senterprisetaskproxyless) | reCAPTCHA v2 Enterprise with the `s` parameter |
-| `ReCaptchaV2Classification` | sync | [Example](#task-recaptchav2classification) | Image classification for a reCAPTCHA v2 grid |
+| `ReCaptchaV2Classification` | sync | [Example](#task-recaptchav2classification) | [Image classification for a reCAPTCHA v2 grid](https://ezxlabs.com/products/image-captcha) |
 
-### reCAPTCHA v3
+### [reCAPTCHA v3](https://ezxlabs.com/products/recaptchav3)
 
 | Task type | Modes | Example | Description |
 | :-: | :-: | :-: | --- |
@@ -57,14 +57,14 @@ Every type has two methods: `solveX` creates the task and polls for the result, 
 | `ReCaptchaV3EnterpriseTaskProxyless` | all | [Example](#task-recaptchav3enterprisetaskproxyless) | reCAPTCHA v3 Enterprise |
 | `ReCaptchaV3EnterpriseTaskProxylessS9` | all | [Example](#task-recaptchav3enterprisetaskproxylesss9) | reCAPTCHA v3 Enterprise, scored ≥ 0.9 |
 
-### FunCaptcha / Arkose Labs
+### [FunCaptcha / Arkose Labs](https://ezxlabs.com/products/funcaptcha)
 
 | Task type | Modes | Example | Description |
 | :-: | :-: | :-: | --- |
 | `FuncaptchaTaskProxyless` | all | [Example](#task-funcaptchataskproxyless) | FunCaptcha token |
 | `FunCaptchaClassification` | sync | [Example](#task-funcaptchaclassification) | Image classification for a FunCaptcha challenge |
 
-### hCaptcha
+### [hCaptcha](https://ezxlabs.com/products/hcaptcha)
 
 | Task type | Modes | Example | Description |
 | :-: | :-: | :-: | --- |
@@ -75,17 +75,17 @@ Every type has two methods: `solveX` creates the task and polls for the result, 
 
 | Task type | Modes | Example | Description |
 | :-: | :-: | :-: | --- |
-| `CloudFlareTurnstileTask` | all | [Example](#task-cloudflareturnstiletask) | Turnstile token |
-| `CloudFlare5STask` | all | [Example](#task-cloudflare5stask) | Five-second interstitial; returns browser state, not a token |
+| `CloudFlareTurnstileTask` | all | [Example](#task-cloudflareturnstiletask) | [Turnstile](https://ezxlabs.com/products/cloudflare-turnstile) token |
+| `CloudFlare5STask` | all | [Example](#task-cloudflare5stask) | [Five-second interstitial](https://ezxlabs.com/products/cloudflare-5s); returns browser state, not a token |
 
-### Akamai
+### [Akamai](https://ezxlabs.com/products/akamai)
 
 | Task type | Modes | Example | Description |
 | :-: | :-: | :-: | --- |
 | `AkamaiWEBTaskProxyless` | sync | [Example](#task-akamaiwebtaskproxyless) | Akamai Web sensor payload, one round at a time |
 | `AkamaiSBSDTaskProxyless` | sync | [Example](#task-akamaisbsdtaskproxyless) | Akamai SBSD sensor payload |
 
-### DataDome
+### [DataDome](https://ezxlabs.com/products/datadome)
 
 | Task type | Modes | Example | Description |
 | :-: | :-: | :-: | --- |
@@ -96,9 +96,9 @@ Every type has two methods: `solveX` creates the task and polls for the result, 
 
 | Task type | Modes | Example | Description |
 | :-: | :-: | :-: | --- |
-| `PerimeterX` | all | [Example](#task-perimeterx) | PerimeterX (Press & Hold) clearance cookies |
-| `IncapsulaTaskProxyless` | sync | [Example](#task-incapsulataskproxyless) | Incapsula Reese84 sensor payload |
-| `TlsTask` | sync | [Example](#task-tlstask) | Forward one HTTP request through the worker's TLS fingerprint |
+| `PerimeterX` | all | [Example](#task-perimeterx) | [PerimeterX (Press & Hold) clearance cookies](https://ezxlabs.com/products/perimeterx) |
+| `IncapsulaTaskProxyless` | sync | [Example](#task-incapsulataskproxyless) | [Incapsula Reese84 sensor payload](https://ezxlabs.com/products/incapsula) |
+| `TlsTask` | sync | [Example](#task-tlstask) | [Forward one HTTP request through the worker's TLS fingerprint](https://ezxlabs.com/products/tls-forward) |
 
 ## 📦 Installation
 

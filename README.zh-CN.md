@@ -37,7 +37,7 @@ EZCaptchaSolver JavaScript SDK 是 [EZXLabs](https://ezxlabs.com) 维护的开�
 
 每个类型都有两个方法:`solveX` 创建任务并轮询结果,`syncSolveX` 走同步端点。两个都返回 Promise —— `sync` 指的是**服务端端点**,不是调用方式。
 
-### reCAPTCHA v2
+### [reCAPTCHA v2](https://ezxlabs.com/zh/products/recaptchav2)
 
 | 任务类型 | 形态 | 示例 | 说明 |
 | :-: | :-: | :-: | --- |
@@ -46,9 +46,9 @@ EZCaptchaSolver JavaScript SDK 是 [EZXLabs](https://ezxlabs.com) 维护的开�
 | `ReCaptchaV2STaskProxyless` | 全部 | [示例](#task-recaptchav2staskproxyless) | reCAPTCHA v2,带挑战绑定的 `s` 参数 |
 | `ReCaptchaV2EnterpriseTaskProxyless` | 全部 | [示例](#task-recaptchav2enterprisetaskproxyless) | reCAPTCHA v2 企业版 |
 | `ReCaptchaV2SEnterpriseTaskProxyless` | 全部 | [示例](#task-recaptchav2senterprisetaskproxyless) | reCAPTCHA v2 企业版,带 `s` 参数 |
-| `ReCaptchaV2Classification` | 同步 | [示例](#task-recaptchav2classification) | reCAPTCHA v2 图片宫格识别 |
+| `ReCaptchaV2Classification` | 同步 | [示例](#task-recaptchav2classification) | [reCAPTCHA v2 图片宫格识别](https://ezxlabs.com/zh/products/image-captcha) |
 
-### reCAPTCHA v3
+### [reCAPTCHA v3](https://ezxlabs.com/zh/products/recaptchav3)
 
 | 任务类型 | 形态 | 示例 | 说明 |
 | :-: | :-: | :-: | --- |
@@ -57,14 +57,14 @@ EZCaptchaSolver JavaScript SDK 是 [EZXLabs](https://ezxlabs.com) 维护的开�
 | `ReCaptchaV3EnterpriseTaskProxyless` | 全部 | [示例](#task-recaptchav3enterprisetaskproxyless) | reCAPTCHA v3 企业版 |
 | `ReCaptchaV3EnterpriseTaskProxylessS9` | 全部 | [示例](#task-recaptchav3enterprisetaskproxylesss9) | reCAPTCHA v3 企业版,分数 ≥ 0.9 |
 
-### FunCaptcha / Arkose Labs
+### [FunCaptcha / Arkose Labs](https://ezxlabs.com/zh/products/funcaptcha)
 
 | 任务类型 | 形态 | 示例 | 说明 |
 | :-: | :-: | :-: | --- |
 | `FuncaptchaTaskProxyless` | 全部 | [示例](#task-funcaptchataskproxyless) | FunCaptcha token |
 | `FunCaptchaClassification` | 同步 | [示例](#task-funcaptchaclassification) | FunCaptcha 图片识别 |
 
-### hCaptcha
+### [hCaptcha](https://ezxlabs.com/zh/products/hcaptcha)
 
 | 任务类型 | 形态 | 示例 | 说明 |
 | :-: | :-: | :-: | --- |
@@ -75,17 +75,17 @@ EZCaptchaSolver JavaScript SDK 是 [EZXLabs](https://ezxlabs.com) 维护的开�
 
 | 任务类型 | 形态 | 示例 | 说明 |
 | :-: | :-: | :-: | --- |
-| `CloudFlareTurnstileTask` | 全部 | [示例](#task-cloudflareturnstiletask) | Turnstile token |
-| `CloudFlare5STask` | 全部 | [示例](#task-cloudflare5stask) | 五秒盾,返回的是浏览器状态而不是一个 token |
+| `CloudFlareTurnstileTask` | 全部 | [示例](#task-cloudflareturnstiletask) | [Turnstile](https://ezxlabs.com/zh/products/cloudflare-turnstile) token |
+| `CloudFlare5STask` | 全部 | [示例](#task-cloudflare5stask) | [五秒盾](https://ezxlabs.com/zh/products/cloudflare-5s),返回的是浏览器状态而不是一个 token |
 
-### Akamai
+### [Akamai](https://ezxlabs.com/zh/products/akamai)
 
 | 任务类型 | 形态 | 示例 | 说明 |
 | :-: | :-: | :-: | --- |
 | `AkamaiWEBTaskProxyless` | 同步 | [示例](#task-akamaiwebtaskproxyless) | Akamai Web 传感器载荷,逐轮进行 |
 | `AkamaiSBSDTaskProxyless` | 同步 | [示例](#task-akamaisbsdtaskproxyless) | Akamai SBSD 传感器载荷 |
 
-### DataDome
+### [DataDome](https://ezxlabs.com/zh/products/datadome)
 
 | 任务类型 | 形态 | 示例 | 说明 |
 | :-: | :-: | :-: | --- |
@@ -96,9 +96,9 @@ EZCaptchaSolver JavaScript SDK 是 [EZXLabs](https://ezxlabs.com) 维护的开�
 
 | 任务类型 | 形态 | 示例 | 说明 |
 | :-: | :-: | :-: | --- |
-| `PerimeterX` | 全部 | [示例](#task-perimeterx) | PerimeterX(按住滑块)通行 cookie |
-| `IncapsulaTaskProxyless` | 同步 | [示例](#task-incapsulataskproxyless) | Incapsula Reese84 传感器载荷 |
-| `TlsTask` | 同步 | [示例](#task-tlstask) | 用 worker 的 TLS 指纹转发一个 HTTP 请求 |
+| `PerimeterX` | 全部 | [示例](#task-perimeterx) | [PerimeterX(按住滑块)通行 cookie](https://ezxlabs.com/zh/products/perimeterx) |
+| `IncapsulaTaskProxyless` | 同步 | [示例](#task-incapsulataskproxyless) | [Incapsula Reese84 传感器载荷](https://ezxlabs.com/zh/products/incapsula) |
+| `TlsTask` | 同步 | [示例](#task-tlstask) | [用 worker 的 TLS 指纹转发一个 HTTP 请求](https://ezxlabs.com/zh/products/tls-forward) |
 
 ## 📦 安装
 
