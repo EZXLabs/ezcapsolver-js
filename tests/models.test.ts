@@ -118,6 +118,34 @@ describe("turning a task into request parameters", () => {
     ).toMatchObject({ index: 0, abck: "", bmsz: "", script_base64: "", encodeData: "" });
   });
 
+  it("sends each DataDome step only the fields it takes", () => {
+    // Step two sends no page, so html_b64 stays out of the request.
+    expect(taskParams({ type: "DataDomeTaskProxyless", step: "2", hash: "script-hash" })).toEqual({
+      step: "2",
+      image: "",
+      hash: "script-hash",
+    });
+
+    expect(
+      taskParams({
+        type: "DataDomeTaskProxyless",
+        step: "3",
+        html_b64: "PGh0bWw+",
+        referer: "https://geo.captcha-delivery.com/captcha/",
+        user_agent: "Mozilla/5.0",
+        external_js_hash: "script-hash",
+        external_js_base64: undefined,
+      }),
+    ).toEqual({
+      step: "3",
+      image: "",
+      html_b64: "PGh0bWw+",
+      referer: "https://geo.captcha-delivery.com/captcha/",
+      user_agent: "Mozilla/5.0",
+      external_js_hash: "script-hash",
+    });
+  });
+
   it("spells hCaptcha's rqdata in lower case, unlike Cloudflare's rqData", () => {
     // One letter apart, and getting it wrong raises no error — the parameter is
     // just ignored. hCaptcha takes a string here, Cloudflare an object, so the
