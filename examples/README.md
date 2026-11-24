@@ -97,7 +97,7 @@ await client.solve({ type: "ReCaptchaV2TaskProxyless", websiteURL, websiteKey })
 
 | Example | Task type | |
 | --- | --- | --- |
-| [`datadome-task-proxyless.ts`](datadome/datadome-task-proxyless.ts) | `DataDomeTaskProxyless` | both challenge steps |
+| [`datadome-task-proxyless.ts`](datadome/datadome-task-proxyless.ts) | `DataDomeTaskProxyless` | all three challenge steps |
 | [`datadome-tags-task-proxyless.ts`](datadome/datadome-tags-task-proxyless.ts) | `DataDomeTagsTaskProxyless` | |
 
 ## Incapsula

@@ -89,7 +89,7 @@ Every type has two methods: `solveX` creates the task and polls for the result, 
 
 | Task type | Modes | Example | Description |
 | :-: | :-: | :-: | --- |
-| `DataDomeTaskProxyless` | sync | [Example](#task-datadometaskproxyless) | DataDome challenge, both steps |
+| `DataDomeTaskProxyless` | sync | [Example](#task-datadometaskproxyless) | DataDome challenge, all three steps |
 | `DataDomeTagsTaskProxyless` | sync | [Example](#task-datadometagstaskproxyless) | DataDome tags payload |
 
 ### Other protection and forwarding tasks
@@ -484,22 +484,29 @@ console.log(solved.solution.payload);
 
 #### DataDomeTaskProxyless
 
-Both steps return the same solution model: step one carries the challenge address in `url`, step two the validation instructions.
+The challenge after a DataDome interception runs in three steps that return the same solution model. Step one turns the intercepted page into the challenge address in `url`, step two asks whether the service already caches the challenge script by its `hash` and answers in `status`, and step three returns the submission in `url`, `body` and `submit_after_ms`.
 
 ```ts
 // Step one: find out where the challenge lives.
 const first = await client.syncSolveDataDomeTaskProxyless({
-  html_b64: challengeHtmlBase64,
+  html_b64: interceptedHtmlBase64,
   step: "1",
   referer: "https://example.com",
+  user_agent: userAgent,
 });
 
-// Step two: capture the slider image, then ask for the validation instructions.
-const second = await client.syncSolveDataDomeTaskProxyless({
+// Step two: ask whether the service caches the challenge script.
+const second = await client.syncSolveDataDomeTaskProxyless({ step: "2", hash: scriptHash });
+
+// Step three: send the challenge page with the script, or only its hash when it is cached.
+const third = await client.syncSolveDataDomeTaskProxyless({
   html_b64: challengeHtmlBase64,
-  step: "2",
-  image: base64EncodedSliderImage,
+  step: "3",
   referer: first.solution.url,
+  user_agent: userAgent,
+  ...(second.solution.status
+    ? { external_js_hash: scriptHash }
+    : { external_js_base64: scriptBase64 }),
 });
 ```
 
