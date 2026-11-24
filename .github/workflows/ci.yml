@@ -118,6 +118,44 @@ jobs:
             console.log('CJS  ok', SDK_VERSION);
           "
 
+      # The ext entry loads lkrequest-js, an optional peer with a native addon,
+      # only when a workflow runs. Without it a workflow must fail with a
+      # readable config error; with it, both module systems must reach the
+      # addon, which the request to a closed port proves.
+      - name: Load the ext entry with and without lkrequest-js
+        working-directory: /tmp/smoke
+        run: |
+          ua='Mozilla/5.0 (Windows NT 10.0) Chrome/153.0.0.0 Safari/537.36'
+          run='solveDataDomeWorkflow(new EzCapSolverClient({ clientKey: "k" }),
+            { targetUrl: "http://127.0.0.1:9/", userAgent: "'"$ua"'" }).catch((e) => e)'
+
+          node --input-type=module -e "
+            import { EzCapSolverClient } from 'ezcapsolver-js';
+            import { solveDataDomeWorkflow } from 'ezcapsolver-js/ext';
+            const error = await $run;
+            if (error.kind !== 'config') throw new Error('ESM: ' + error);
+            console.log('ESM  ext without lkrequest-js ok');
+          "
+
+          npm install lkrequest-js > /dev/null
+
+          node --input-type=module -e "
+            import { EzCapSolverClient } from 'ezcapsolver-js';
+            import { solveDataDomeWorkflow } from 'ezcapsolver-js/ext';
+            const error = await $run;
+            if (error.kind !== 'browser-request') throw new Error('ESM: ' + error);
+            console.log('ESM  ext with lkrequest-js ok');
+          "
+
+          node --input-type=commonjs -e "
+            const { EzCapSolverClient } = require('ezcapsolver-js');
+            const { solveDataDomeWorkflow } = require('ezcapsolver-js/ext');
+            $run.then((error) => {
+              if (error.kind !== 'browser-request') throw new Error('CJS: ' + error);
+              console.log('CJS  ext with lkrequest-js ok');
+            });
+          "
+
   typos:
     name: Typos
     runs-on: ubuntu-latest

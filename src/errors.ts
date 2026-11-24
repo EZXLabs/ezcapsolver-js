@@ -44,7 +44,14 @@ export type ErrorKind =
   /** E5 — a raw solution did not fit its model. */
   | "solution-decode"
   /** A task was created and billed, but waiting for its result failed. */
-  | "wait-interrupted";
+  | "wait-interrupted"
+  /**
+   * An `ezcapsolver-js/ext` DataDome workflow that cannot go on, or that
+   * DataDome banned.
+   */
+  | "datadome"
+  /** A request of an `ezcapsolver-js/ext` workflow to the protected site failed. */
+  | "browser-request";
 
 /**
  * Base class for every failure raised by this SDK.
