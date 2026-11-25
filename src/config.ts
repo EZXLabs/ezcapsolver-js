@@ -304,4 +304,4 @@ function defaultUserAgent(): string {
  * Kept in sync with package.json by a test; the release workflow fails when a
  * tag does not match it.
  */
-export const SDK_VERSION = "0.1.0";
+export const SDK_VERSION = "0.1.1";
