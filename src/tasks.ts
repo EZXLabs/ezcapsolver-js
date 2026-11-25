@@ -331,7 +331,7 @@ export interface CloudflareTurnstileParams extends TaskExtra {
 // ---------------------------------------------------------------------------
 
 /** DataDome challenge step. */
-export type DataDomeStep = "1" | "2";
+export type DataDomeStep = "1" | "2" | "3";
 
 /** JavaScript mode for DataDome tags. */
 export type DataDomeJsType = "ch" | "le";
@@ -339,12 +339,16 @@ export type DataDomeJsType = "ch" | "le";
 /**
  * DataDome challenge, proxyless.
  *
- * Both steps return a `DataDomeSolution`: step one carries the challenge
- * address in `url`, step two the validation instructions.
+ * Every step returns a `DataDomeSolution`: step one carries the challenge
+ * address in `url`, step two whether the challenge script is cached in
+ * `status`, and step three the submission.
  */
 export interface DataDomeParams extends TaskExtra {
-  /** Base64-encoded challenge HTML. */
-  html_b64: string;
+  /**
+   * Base64-encoded page: the intercepted page on step one, the challenge page
+   * on step three. Step two leaves it out.
+   */
+  html_b64?: string | undefined;
   /** Step of the challenge workflow. Defaults to `"1"`. */
   step?: DataDomeStep | undefined;
   /** Optional base64-encoded image. */
@@ -355,6 +359,17 @@ export interface DataDomeParams extends TaskExtra {
   parent_url?: string | undefined;
   /** Optional equipment identifier. */
   equipment?: string | undefined;
+  /** Step two: hash of the challenge script to look up in the service cache. */
+  hash?: string | undefined;
+  /** Optional browser User-Agent the challenge is solved for. */
+  user_agent?: string | undefined;
+  /** Step three: hash of the challenge script, when step two reported it cached. */
+  external_js_hash?: string | undefined;
+  /**
+   * Step three: the base64-encoded challenge script, when step two reported it
+   * not cached.
+   */
+  external_js_base64?: string | undefined;
 }
 
 /** DataDome tags, proxyless. */

@@ -178,20 +178,28 @@ export interface TlsForwardSolution extends UnmodelledFields {
 }
 
 /**
- * Returned by both DataDome challenge steps and by both DataDome task types.
+ * Returned by every DataDome challenge step and by both DataDome task types.
  *
- * Step one carries the challenge address in `url`, step two the validation
- * instructions. Earlier workers returned step one as a bare string; it is an
- * object now, which is why both steps decode into this one type — and why
- * `solved.raw` does not narrow along with the model.
+ * Step one carries the challenge address in `url`, step two whether the
+ * challenge script is cached in `status`, and step three the submission.
+ * Earlier workers returned step one as a bare string; it is an object now,
+ * which is why every step decodes into this one type — and why `solved.raw`
+ * does not narrow along with the model.
  */
 export interface DataDomeSolution extends UnmodelledFields {
   /** The challenge kind, such as `slider` or `interstitial`. */
   kind?: string;
-  /** The challenge URL on step one and the validation endpoint on step two. */
+  /** The challenge URL on step one and the submission URL on step three. */
   url?: string;
-  /** The optional validation request body. */
+  /** The optional submission body on step three. */
   body?: string;
+  /** Step two: whether the service already caches the challenge script. */
+  status?: boolean;
+  /**
+   * Step three: milliseconds to wait, from when the challenge page loaded,
+   * before submitting.
+   */
+  submit_after_ms?: number;
 }
 
 /** Wraps the Reese84 payload. */

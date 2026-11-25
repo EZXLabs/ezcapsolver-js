@@ -20,6 +20,9 @@ importers:
       '@vitest/coverage-v8':
         specifier: ^5.0.5
         version: 5.0.5(vitest@5.0.5)
+      lkrequest-js:
+        specifier: ^0.1.0
+        version: 0.1.0
       publint:
         specifier: ^0.3.24
         version: 0.3.24
@@ -148,6 +151,58 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
+  '@lkrequest/binding-darwin-arm64@0.1.0':
+    resolution: {integrity: sha512-HMwN26xSdJKq++tcU3k0wgCLGvSgnbfyMq2OtQYvxmldzHGY8dTtQYLbRCpWxcqF0vMpfLFHfm6Xw8P5bCo43A==}
+    engines: {node: '>=22.12.0'}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@lkrequest/binding-darwin-x64@0.1.0':
+    resolution: {integrity: sha512-PoubV1pqYVvh7iPG06/3IB7p7xuenb0G2J/xMWbSg1oIX6eLk8HLMK8RSQPIMKg4P4t/2OmBX+8nBSWZWLs+/g==}
+    engines: {node: '>=22.12.0'}
+    cpu: [x64]
+    os: [darwin]
+
+  '@lkrequest/binding-linux-arm64-gnu@0.1.0':
+    resolution: {integrity: sha512-xqNA6gpn//rswGGm1Fi4mgvfdMjKLYvQJ+zRP2p4cUMp3/mqYUyYFl+FlPAEmP3wkoZJ44eF9augQTw6AG6NPA==}
+    engines: {node: '>=22.12.0'}
+    cpu: [arm64]
+    os: [linux]
+    libc: [glibc]
+
+  '@lkrequest/binding-linux-arm64-musl@0.1.0':
+    resolution: {integrity: sha512-QjqrQD3cW4OezC6fs5HN2SfAU0yEo5wwmtIzTG0y9VhU+KkFTzjE0MwfOSNboI10NslsPa/ZBV8uLq7VWMGmlw==}
+    engines: {node: '>=22.12.0'}
+    cpu: [arm64]
+    os: [linux]
+    libc: [musl]
+
+  '@lkrequest/binding-linux-x64-gnu@0.1.0':
+    resolution: {integrity: sha512-gfDStXQknCqWOMJAI6VJg2OkX9PNjr1Ax1wKdKNAIaEBBg8VrUXTWm27x4pADQAwio9cUuhi/fyU8mT3vNuelQ==}
+    engines: {node: '>=22.12.0'}
+    cpu: [x64]
+    os: [linux]
+    libc: [glibc]
+
+  '@lkrequest/binding-linux-x64-musl@0.1.0':
+    resolution: {integrity: sha512-T1dMV9OB4lzmS37i3z6E+9p1qVI/q2j+lVOm7agNzZgFdjM1Kv+JZPqHle9Vi+g/8Wi2iaulvm8FWhUj7riEEg==}
+    engines: {node: '>=22.12.0'}
+    cpu: [x64]
+    os: [linux]
+    libc: [musl]
+
+  '@lkrequest/binding-win32-arm64-msvc@0.1.0':
+    resolution: {integrity: sha512-sFL5iNec1OXbiX4bhVvjMG0atkTi6gAXSvIBJUosDSKzsdaP+Ay95yGCXuPYqBxcmSAZ8uDCd7hUzH3xASGl/w==}
+    engines: {node: '>=22.12.0'}
+    cpu: [arm64]
+    os: [win32]
+
+  '@lkrequest/binding-win32-x64-msvc@0.1.0':
+    resolution: {integrity: sha512-FLZwDdFDPCZFsr5UDLGsnjZetjs3BWfO+VI7moZRobByQiuZ7CFe+ZI4/8i5u8Sw52L4lcMXemJ+9x8qjl/hYA==}
+    engines: {node: '>=22.12.0'}
+    cpu: [x64]
+    os: [win32]
+
   '@loaderkit/resolve@1.0.6':
     resolution: {integrity: sha512-G8FdIoF5CypfwmD9rl8BXod5HDn8JqB0CCNBXDTaRZ+yRYhARrrSToX1zg1zy9jX3zLqigsELwhT4gNtkdQAUg==}
 
@@ -241,6 +296,7 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
 
   '@rolldown/binding-linux-arm64-gnu@1.2.8':
     resolution: {integrity: sha512-KdYQDPHwJVnbFwdTGMgxsI9SqblBlz6STGM+w1We/d5B8OWWidYH0MwkU/uA1wM5fIpO2MkOVxXrNzzuZhw9ew==}
@@ -254,6 +310,7 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
 
   '@rolldown/binding-linux-arm64-musl@1.2.8':
     resolution: {integrity: sha512-jFJTifHnNPY+yzOoNZQfSIysrVyXzEQPhPnOUjmD1bcQGHH6s7c8cViKWar8YplQImE5N9JRqMCLrM2CdxOrZA==}
@@ -267,6 +324,7 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [ppc64]
     os: [linux]
+    libc: [glibc]
 
   '@rolldown/binding-linux-ppc64-gnu@1.2.8':
     resolution: {integrity: sha512-FhiOziBDWPBjbcmRzfLyIJnaP7AVMFXT7YCXPjXxj7wKU3vx24RjrCNN/zjvVa+N2vVoHJwCoUBvsrN/DG3zIA==}
@@ -280,6 +338,7 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [s390x]
     os: [linux]
+    libc: [glibc]
 
   '@rolldown/binding-linux-s390x-gnu@1.2.8':
     resolution: {integrity: sha512-WnHfADMzOV2Y55wlx1hzzQnar/wDt/VdvWSD99r18Mz9ylNieIGOkRx3UV21h7m/eJvjySYJkO26VvGNFkwsIQ==}
@@ -293,6 +352,7 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
   '@rolldown/binding-linux-x64-gnu@1.2.8':
     resolution: {integrity: sha512-H9tRr5ibfXFVLxbPOseVewewFpl28zcEdjRDt2FTUZU7odxP0gEv1ki4/kGmcGOh78oRwZuuQllGLZ9zTJp84g==}
@@ -306,6 +366,7 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
 
   '@rolldown/binding-linux-x64-musl@1.2.8':
     resolution: {integrity: sha512-UefiqfM3D6IVNlZ8tSGs9+Ejjud2T+oxO0IHADU45Y+lyEjD2dVFyZHbkfX0LUb5Zugo/oIv1eCO/KVYhgYJYA==}
@@ -810,6 +871,10 @@ packages:
   linkify-it@5.0.2:
     resolution: {integrity: sha512-ONTm2jCMAVZjgQa/Fy1kScXsuOoF5NPTsoFBdE1KVIZ2vAh/r9+Bqo+0jINCBYnavTPQZz38QzFTme79ENoN3Q==}
 
+  lkrequest-js@0.1.0:
+    resolution: {integrity: sha512-RFMta9h3mSeZbNSRMHrHzh1OB7St1ZWWfxeGuRdhv0GO5DFxcxfGvUB/+Ps3g4x/vG23ckjzZV99qfUwzMHjGQ==}
+    engines: {node: '>=22.12.0'}
+
   lru-cache@11.5.2:
     resolution: {integrity: sha512-4pfM1Ff0x50o0tQwb5ucw/RzNyD0/YJME6IVcStalZuMWxdt3sR3huStTtxz4PUmvZfRguvDejasvQ2kifR11g==}
     engines: {node: 20 || >=22}
@@ -1295,6 +1360,30 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.6.0
 
+  '@lkrequest/binding-darwin-arm64@0.1.0':
+    optional: true
+
+  '@lkrequest/binding-darwin-x64@0.1.0':
+    optional: true
+
+  '@lkrequest/binding-linux-arm64-gnu@0.1.0':
+    optional: true
+
+  '@lkrequest/binding-linux-arm64-musl@0.1.0':
+    optional: true
+
+  '@lkrequest/binding-linux-x64-gnu@0.1.0':
+    optional: true
+
+  '@lkrequest/binding-linux-x64-musl@0.1.0':
+    optional: true
+
+  '@lkrequest/binding-win32-arm64-msvc@0.1.0':
+    optional: true
+
+  '@lkrequest/binding-win32-x64-msvc@0.1.0':
+    optional: true
+
   '@loaderkit/resolve@1.0.6':
     dependencies:
       '@braidai/lang': 1.1.2
@@ -1726,6 +1815,17 @@ snapshots:
   linkify-it@5.0.2:
     dependencies:
       uc.micro: 2.1.0
+
+  lkrequest-js@0.1.0:
+    optionalDependencies:
+      '@lkrequest/binding-darwin-arm64': 0.1.0
+      '@lkrequest/binding-darwin-x64': 0.1.0
+      '@lkrequest/binding-linux-arm64-gnu': 0.1.0
+      '@lkrequest/binding-linux-arm64-musl': 0.1.0
+      '@lkrequest/binding-linux-x64-gnu': 0.1.0
+      '@lkrequest/binding-linux-x64-musl': 0.1.0
+      '@lkrequest/binding-win32-arm64-msvc': 0.1.0
+      '@lkrequest/binding-win32-x64-msvc': 0.1.0
 
   lru-cache@11.5.2: {}
 

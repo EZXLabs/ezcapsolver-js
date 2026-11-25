@@ -89,7 +89,7 @@ EZCaptchaSolver JavaScript SDK 是 [EZXLabs](https://ezxlabs.com) 维护的开�
 
 | 任务类型 | 形态 | 示例 | 说明 |
 | :-: | :-: | :-: | --- |
-| `DataDomeTaskProxyless` | 同步 | [示例](#task-datadometaskproxyless) | DataDome 挑战,含两个步骤 |
+| `DataDomeTaskProxyless` | 同步 | [示例](#task-datadometaskproxyless) | DataDome 挑战,含三个步骤 |
 | `DataDomeTagsTaskProxyless` | 同步 | [示例](#task-datadometagstaskproxyless) | DataDome tags 载荷 |
 
 ### 其他防护与转发任务
@@ -483,22 +483,29 @@ console.log(solved.solution.payload);
 
 #### DataDomeTaskProxyless
 
-两个步骤返回同一个 solution 模型:步骤一在 `url` 里给出挑战地址,步骤二给出校验指令。
+DataDome 拦截后的挑战分三步,三步返回同一个 solution 模型。步骤一从被拦截页面拿到挑战地址(`url`),步骤二用 `hash` 询问服务端是否已缓存挑战脚本(结果在 `status`),步骤三在 `url`、`body`、`submit_after_ms` 里返回交卷信息。
 
 ```ts
 // 步骤一:拿到挑战地址。
 const first = await client.syncSolveDataDomeTaskProxyless({
-  html_b64: challengeHtmlBase64,
+  html_b64: interceptedHtmlBase64,
   step: "1",
   referer: "https://example.com",
+  user_agent: userAgent,
 });
 
-// 步骤二:抓到滑块图片后,请求校验指令。
-const second = await client.syncSolveDataDomeTaskProxyless({
+// 步骤二:询问服务端是否已缓存挑战脚本。
+const second = await client.syncSolveDataDomeTaskProxyless({ step: "2", hash: scriptHash });
+
+// 步骤三:传挑战页和脚本,脚本已缓存时只传 hash。
+const third = await client.syncSolveDataDomeTaskProxyless({
   html_b64: challengeHtmlBase64,
-  step: "2",
-  image: base64EncodedSliderImage,
+  step: "3",
   referer: first.solution.url,
+  user_agent: userAgent,
+  ...(second.solution.status
+    ? { external_js_hash: scriptHash }
+    : { external_js_base64: scriptBase64 }),
 });
 ```
 
